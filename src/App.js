@@ -6,14 +6,14 @@ import Cart from './components/Cart/Cart';
 import CartProvider from './store/CartProvider';
 
 function App() {
-  const [cartIsShow, setCardIsShow] = useState(false);
+  const [cartIsShow, setCartIsShow] = useState(false);
 
   const showCartHandler = () => {
-    setCardIsShow(true);
+    setCartIsShow(true);
   };
 
   const hideCartHandler = () => {
-    setCardIsShow(false);
+    setCartIsShow(false);
   };
 
   return (
