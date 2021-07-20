@@ -8,12 +8,22 @@ import { useCallback, useEffect, useState } from 'react';
 const AvailableMeals = () => {
   const [meals, setMeals] = useState([]);
 
+  //fetch data from server
+  const fetchMealsHandler = useCallback(async () => {
+    const response = await fetch('https://green-meals-default-rtdb.firebaseio.com/meals/.json') //.json is required in firebase
+    const responseData = await response.json();//this is an object
 
-  const fetchMealsHandler = useCallback(() => {
-    fetch('https://green-meals-default-rtdb.firebaseio.com/meals/.json') //.json is required in firebase
-      .then(response => response.json())
-      .then(data => addKeys(data))
-      .catch(error => console.log(error));
+    const loadedData = [];
+  //loop thruogh every key of the responseData to get the value is the object of each meal
+    for (const key in responseData) {
+      loadedData.push({
+        id: key,
+        name: responseData[key].name,
+        description: responseData[key].description,
+        price: responseData[key].price
+      })
+    }
+    setMeals(loadedData);
   }, []);
 
   //fetch data whenever the the function is called (the data changes)
@@ -21,15 +31,6 @@ const AvailableMeals = () => {
     fetchMealsHandler();
   }, [fetchMealsHandler]);
 
-
-  //add keys into the meal objects
-  const addKeys = (data) => {
-    const keys = Object.keys(data);
-    const valueKeys = Object.values(data).map((item, index) =>
-      Object.defineProperty(item, 'id', { value: keys[index] }));
-    setMeals(valueKeys);
-
-  }
   const mealsList = meals.map(mealData =>
     <MealItem
       key={mealData.id}
