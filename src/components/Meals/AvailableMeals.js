@@ -1,42 +1,44 @@
 import Card from '../UI/Card';
 import MealItem from './MealItem/MealItem';
 import classes from "./AvailableMeals.module.css";
+import { useCallback, useEffect, useState } from 'react';
 
-const DUMMY_MEALS = [
-  {
-    id: 'm1',
-    name: 'Sushi',
-    description: 'Finest fish and veggies',
-    price: 22.99,
-  },
-  {
-    id: 'm2',
-    name: 'Schnitzel',
-    description: 'A german specialty!',
-    price: 16.5,
-  },
-  {
-    id: 'm3',
-    name: 'Barbecue Burger',
-    description: 'American, raw, meaty',
-    price: 12.99,
-  },
-  {
-    id: 'm4',
-    name: 'Green Bowl',
-    description: 'Healthy...and green...',
-    price: 18.99,
-  },
-];
+
 
 const AvailableMeals = () => {
-  const mealsList= DUMMY_MEALS.map(meal => 
+  const [meals, setMeals] = useState([]);
+
+
+  const fetchMealsHandler = useCallback(() => {
+    fetch('https://green-meals-default-rtdb.firebaseio.com/meals/.json') //.json is required in firebase
+      .then(response => response.json())
+      .then(data => addKeys(data))
+      .catch(error => console.log(error));
+  }, []);
+
+  //fetch data whenever the the function is called (the data changes)
+  useEffect(() => {
+    fetchMealsHandler();
+  }, [fetchMealsHandler]);
+
+
+  //add keys into the meal objects
+  const addKeys = (data) => {
+    const keys = Object.keys(data);
+    const valueKeys = Object.values(data).map((item, index) =>
+      Object.defineProperty(item, 'id', { value: keys[index] }));
+    setMeals(valueKeys);
+
+  }
+  const mealsList = meals.map(mealData =>
     <MealItem
-      key={meal.id}
-      id={meal.id}
-      name={meal.name}
-      description={meal.description}
-      price={meal.price} />);
+      key={mealData.id}
+      id={mealData.id}
+      name={mealData.name}
+      description={mealData.description}
+      price={mealData.price} />
+  );
+
   return (
     <section className={classes.meals}>
       <Card>
