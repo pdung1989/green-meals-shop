@@ -47,6 +47,14 @@ const Checkout = props => {
     if (!formIsValid) {
       return;
     }
+
+    //submit the user data
+    props.onConfirm({
+      name: enteredName,
+      street: enteredStreet,
+      postal: enteredPostal,
+      city: enteredCity
+    })
   }
   //change the css class if the value is invalid
   const nameControlClasses = `${classes.control} 

@@ -29,6 +29,17 @@ const Cart = (props) => {
     setIsCheckout(true);
   };
 
+  //submit order
+  const submitOrderHandler = (userData) => {
+    fetch('https://green-meals-default-rtdb.firebaseio.com/orders.json', {
+      method: 'POST',
+      body: JSON.stringify({
+        user: userData,
+        orderItems: cartCtx.items
+      })
+    });
+  };
+
   const cartItems = (
     <ul className={classes['cart-items']}>
       {cartCtx.items.map(item => (
@@ -48,7 +59,7 @@ const Cart = (props) => {
         <span>Total Amount</span>
         <span>{totalAmount}</span>
       </div>
-      {isCheckout && <Checkout onCancel={props.onClose} />}
+      {isCheckout && <Checkout onConfirm={submitOrderHandler} onCancel={props.onClose} />}
       <div className={classes.actions}>
         {!isCheckout && <button className={classes['button--alt']} onClick={props.onClose}>Close</button>}
         {hasItems && !isCheckout && <button className={classes.button} onClick={onOrderHandler}>Order</button>}
