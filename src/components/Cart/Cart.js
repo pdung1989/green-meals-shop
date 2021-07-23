@@ -13,7 +13,7 @@ const Cart = (props) => {
 
   const cartCtx = useContext(CartContext);
   //total amount
-  const totalAmount = `$${cartCtx.totalAmount.toFixed(2)}`;
+  const totalAmount = `€${cartCtx.totalAmount.toFixed(2)}`;
   //if the cart has any item
   const hasItems = cartCtx.items.length > 0;
 
