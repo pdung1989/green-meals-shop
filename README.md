@@ -1,5 +1,6 @@
 # green-meals-shop
-A green meals online shop using ReactJs and CSS
+
+A green meals online shop demo app using ReactJs and CSS.
 --------------------------------------------------------------------------
 ## Run the project
 1. Git clone: https://github.com/pdung1989/Burger_Online_Shop.git to your local machine.
