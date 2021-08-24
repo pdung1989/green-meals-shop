@@ -3,7 +3,7 @@
 A green meals online shop demo app using ReactJs and CSS.
 --------------------------------------------------------------------------
 ## Run the project
-1. Git clone: https://github.com/pdung1989/Burger_Online_Shop.git to your local machine.
+1. Git clone: https://github.com/pdung1989/green-meals-shop.git to your local machine.
 2. Install npm:
 - npm install
 - npm install --save axios
